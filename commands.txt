@@ -1,0 +1,16 @@
+  642  npm install --save simple-react-lightbox
+  643  npm install --force simple-react-lightbox
+  644  gatsby develop
+  645  git status
+  646  git add .
+  647  git commit -m "Initial release"
+  648  git status
+  649  gatsby develop
+  650  gatsby clean
+  651  gatsby develop
+  652  gatsby clean
+  653  gatsby develop
+  654  gatsby develop
+  655  gatsby develop
+  656  history | fgrep lightbox
+  657  history

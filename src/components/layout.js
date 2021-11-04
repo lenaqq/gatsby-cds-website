@@ -9,7 +9,8 @@ import * as React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import "./layout.css"
-import NavBar from "./NavBar"
+import NavivationBar from "./NavBar/index"
+
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -24,7 +25,8 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <NavBar />
+      <NavivationBar />
+
       <div
         style={{
           margin: `0 auto`,

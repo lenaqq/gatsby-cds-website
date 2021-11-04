@@ -4,6 +4,32 @@ module.exports = {
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    menuLinks: [
+      {
+          'link': "/",
+          "title": "Home",
+          "subMenu": null
+      },
+      {
+          'link': "/images",
+          "title": "Gallery",
+          "subMenu": [
+            {
+              "link": "/Images/BuenosAires/",
+              "title": "BuenosAires"
+            },
+            {
+                "link": "/Images/Jelusalem/",
+                "title": "Jelusalem"
+            },    
+          ]
+      },
+      {
+        'link': "/blog",
+        "title": "Blog",
+        "subMenu": null
+    },
+    ]
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

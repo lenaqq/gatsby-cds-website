@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { IconContext } from 'react-icons/lib'
-import { Nav, NavbarContainer, NavLogo, NavIcon, MobileIcon , NavMenu, NavItem, NavLinks
-        } from "./NavbarElements"
+//import { Nav, NavbarContainer, NavLogo, NavIcon, MobileIcon , NavMenu, NavItem, NavLinks
+//       } from "./NavbarElements"
+        
+import { Container, Carousel, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
-const Navbar = () => {
+import { Link, graphql, useStaticQuery } from "gatsby"
+
+const NavigationBar = () => {
     const [click, setClick] = useState(false)
     const [scroll, setScroll] = useState(false)
 
@@ -23,37 +27,44 @@ const Navbar = () => {
         window.addEventListener("scroll", changeNav)
     }, [])
 
+    const data = useStaticQuery(graphql`
+        query {
+            allDirectory(filter: {relativeDirectory: {eq: "images"}}) {
+              edges {
+                node {
+                  nlink
+                  relativeDirectory
+                  relativePath
+                  name
+                }
+              }
+            }
+          }
+    `)
+
+    //console.log(data.allDirectory.edges);
+
     return (
-        <>
-            <IconContext.Provider value = { { color: "#141414"}}>
-                <Nav active={scroll} click={click}>
-                    <NavbarContainer>
-                        <NavLogo to="/">
-                            <NavIcon />
-                                Explore
-                        </NavLogo>
-                        <MobileIcon onClick={handleClick}>
-                            {click ? <FaTimes /> : <FaBars />}
-                        </MobileIcon>
-                        <NavMenu onClick={handleClick} click={click}>
-                            <NavItem>
-                                <NavLinks to="/">Home</NavLinks>
-                            </NavItem>
-                            <NavItem>
-                                <NavLinks to="/about">About</NavLinks>
-                            </NavItem>
-                            <NavItem>
-                                <NavLinks to="/images">Images</NavLinks>
-                            </NavItem>
-                            <NavItem>
-                                <NavLinks to="/blog">Blogs</NavLinks>
-                            </NavItem>
-                        </NavMenu>
-                    </NavbarContainer>
+            <Navbar bg="light" expand="lg">
+            <Container>
+                <Navbar.Brand href="#home">Creative Digital Space</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/about">About</Nav.Link>
+                    <Nav.Link href="/blog">Blogs</Nav.Link>
+                    <NavDropdown title="Gallery" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="/images/BuenosAires">BuenosAires</NavDropdown.Item>
+                    <NavDropdown.Item href="/images/Jelusalem">Jelusalem</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/images/exhibition">Exhibition</NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
-            </IconContext.Provider>
-        </>
+                </Navbar.Collapse>
+            </Container>
+            </Navbar>
     )
 }
 
-export default Navbar
+export default NavigationBar

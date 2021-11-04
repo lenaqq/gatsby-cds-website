@@ -8,8 +8,7 @@ import HeroSection from "../components/HeroSection"
 import MyImage from "../components/image"
 
 import Img from 'gatsby-image'
-
-import { Container, Carousel } from 'react-bootstrap';
+import {  Carousel } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const IndexPage = ({data}) => (

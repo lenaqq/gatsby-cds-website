@@ -22,6 +22,7 @@
     "gatsby-plugin-styled-components": "^5.0.0",
     "gatsby-source-filesystem": "^4.0.0",
     "gatsby-transformer-sharp": "^4.0.0",
+    "mdb-ui-kit": "^3.9.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-bootstrap": "^2.0.1",

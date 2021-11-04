@@ -26,34 +26,34 @@ const displayOneImage = ({data}) => {
   )
   }
 
-const MyImage = () => {
+  const options = {
+    buttons: {
+      backgroundColor: 'rgba(30,30,36,0.8)',
+      iconColor: 'rgba(255, 255, 255, 0.8)',
+      iconPadding: '10px',
+      showAutoplayButton: true,
+      showCloseButton: true,
+      showDownloadButton: false,
+      showFullscreenButton: true,
+      showNextButton: true,
+      showPrevButton: true,
+      showThumbnailsButton: true,
+      size: '40px'
+    }
+}
+  
+const MyImage = ({data}) => {
   const [currentImage, setCurrentImage] = useState(0);
 
-  const data = useStaticQuery(graphql`
-              query  {
-                allFile(
-                    filter: {relativeDirectory: {eq: "images/gallery"}, extension: {regex: "/(jpg)|(png)/"}}) {
-                  edges {
-                    node {
-                      id
-                      base
-                      publicURL
-                      childImageSharp {
-                        fluid(maxWidth: 600, maxHeight: 400) {
-                          ...GatsbyImageSharpFluid
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-  `)
+  const image_dir = "image/gallery/Jelusalem";
+
+  console.log(data);
 
   return (
       <div className="image-container">
         <h1>View artworks</h1>
           <SimpleReactLightbox>
-            <SRLWrapper>
+            <SRLWrapper options={options}>
               <div className="image-grid" >
                     { data.allFile.edges.map((image, key) => (
                         <div className="frame"  >
@@ -74,5 +74,25 @@ const MyImage = () => {
   )
   
 }
+
+export const query = graphql`
+query MyImageQuery( $image_dir: String ) {
+  allFile(
+      filter: {relativeDirectory: {eq: $image_dir}, extension: {regex: "/(jpg)|(png)/"}}) {
+    edges {
+      node {
+        id
+        base
+        publicURL
+        childImageSharp {
+          fluid(maxWidth: 600, maxHeight: 400) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  }
+}
+`
 
 export default MyImage

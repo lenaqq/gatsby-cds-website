@@ -1,48 +1,130 @@
 import React from "react"
+/*
 import MyImage from "../components/image"
 import Layout from "../components/layout"
 
-/*
+
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
 
 import Seo from "../components/seo"
 import HeroSection from "../components/HeroSection"
-*/
 
 import { Carousel} from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css"
+*/
 
 
-import img1 from "../../data/images/gallery/IMG_4572.jpg"
-import img2 from "../../data/images/gallery/IMG_4457.jpg"
+import * as mdb from 'mdb-ui-kit'; // lib
+import { Input } from 'mdb-ui-kit'; // module
+import 'mdb-ui-kit/css/mdb.min.css';
+
 
 const AboutPage = () => (
-<Layout>
-    <Carousel>
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={img1}
-      alt="First slide"
-      width="90%"
-      text-align ="center"
-    />
-  </Carousel.Item>
-  <Carousel.Item>
-    <img
+    <>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
 
-        className="d-block w-100"
-      src={img2}
-      alt="Second slide"
-      width="90%"
-      text-align ="center"
-    />
-  </Carousel.Item>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <a class="navbar-brand mt-2 mt-lg-0" href="#">
+        <img
+          src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
+          height="15"
+          alt=""
+          loading="lazy"
+        />
+      </a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Team</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Projects</a>
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center">
+      <a class="text-reset me-3" href="#">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
 
-</Carousel>
-</Layout>
+
+      <a
+        class="text-reset me-3 dropdown-toggle hidden-arrow"
+        href="#"
+        id="navbarDropdownMenuLink"
+        role="button"
+        data-mdb-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fas fa-bell"></i>
+        <span class="badge rounded-pill badge-notification bg-danger">1</span>
+      </a>
+      <ul
+        class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="navbarDropdownMenuLink"
+      >
+        <li>
+          <a class="dropdown-item" href="#">Some news</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">Another news</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </li>
+      </ul>
+
+
+      <a
+        class="dropdown-toggle d-flex align-items-center hidden-arrow"
+        href="#"
+        id="navbarDropdownMenuLink"
+        role="button"
+        data-mdb-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img
+          src="https://mdbootstrap.com/img/new/avatars/2.jpg"
+          class="rounded-circle"
+          height="25"
+          alt=""
+          loading="lazy"
+        />
+      </a>
+      <ul
+        class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="navbarDropdownMenuLink"
+      >
+        <li>
+          <a class="dropdown-item" href="#">My profile</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">Settings</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    </>
 )
 
 export default AboutPage
