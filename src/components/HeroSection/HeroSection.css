@@ -2,7 +2,7 @@
     background: url('../../images/bg.jpg') center center/cover no-repeat;
     background-size: 100% auto;
     height: 50vh;
-    width: 100%;
+    width:  100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
