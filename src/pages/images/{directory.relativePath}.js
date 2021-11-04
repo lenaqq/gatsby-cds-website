@@ -2,7 +2,7 @@ import * as React from "react"
 import { Link, graphql, useStaticQuery } from "gatsby"
 import Img from 'gatsby-image'
 import "../../components/image.css"
-import Layout from "../../Components/layout"
+import Layout from "../../components/layout"
 
 import { useState, useCallback } from 'react'
 import { Modal, ModalGateway } from "react-images";
