@@ -8,6 +8,8 @@ import { Container, Carousel, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 import { Link, graphql, useStaticQuery } from "gatsby"
 
+import "./NavBarElements.css"
+
 const NavigationBar = () => {
     const [click, setClick] = useState(false)
     const [scroll, setScroll] = useState(false)
@@ -45,14 +47,15 @@ const NavigationBar = () => {
     //console.log(data.allDirectory.edges);
 
     return (
-            <Navbar bg="light" expand="lg">
+            <Navbar  expand="lg"  className="navbar-container">
             <Container>
                 <Navbar.Brand href="#home">Creative Digital Space</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link className="navlink-colour"href="/">Home</Nav.Link>
                     <Nav.Link href="/about">About</Nav.Link>
+                    <Nav.Link href="/enrolment">Enrolment</Nav.Link>
                     <Nav.Link href="/blog">Blogs</Nav.Link>
                     <NavDropdown title="Gallery" id="basic-nav-dropdown">
                     <NavDropdown.Item href="/images/BuenosAires">BuenosAires</NavDropdown.Item>
