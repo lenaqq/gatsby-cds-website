@@ -1,0 +1,11 @@
+GET https://ccjm8m9uo1.execute-api.us-east-1.amazonaws.com/prod
+
+###
+
+POST https://ccjm8m9uo1.execute-api.us-east-1.amazonaws.com/prod
+content-type: application/json
+
+{
+    "subject": "New Enrolment (20211117)",
+    "body": "Online Digital Art Course"
+}
