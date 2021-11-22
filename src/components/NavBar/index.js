@@ -58,11 +58,12 @@ const NavigationBar = () => {
                     <Nav.Link href="/enrolment">Enrolment</Nav.Link>
                     <Nav.Link href="/blog">Blogs</Nav.Link>
                     <NavDropdown title="Gallery" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/images/BuenosAires">BuenosAires</NavDropdown.Item>
-                    <NavDropdown.Item href="/images/Jelusalem">Jelusalem</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="/images/exhibition">Exhibition</NavDropdown.Item>
+                        <NavDropdown.Item href="/images/BuenosAires">BuenosAires</NavDropdown.Item>
+                        <NavDropdown.Item href="/images/Jelusalem">Jelusalem</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="/images/exhibition">Exhibition</NavDropdown.Item>
                     </NavDropdown>
+                    <Nav.Link href="/contact">Contact</Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
             </Container>

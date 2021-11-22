@@ -10,13 +10,13 @@ import  { Form, Button, Container, Row, Col } from "react-bootstrap"
 import gatsbyicon from "../images/gatsby-icon.png"
 
 const EnrolmentPage = () => {
-  const [email, setEmail] = useState('');
+  //const [email, setEmail] = useState('');
 
   const [firstName, setFirstName] = useState('');
   const [secondName, setSecondName] = useState('');
 
 
-  const [message, setMessage] = useState("");
+  //const [message, setMessage] = useState("");
 
   const handleSubmit = () => {
     console.log( email );
@@ -25,8 +25,11 @@ const EnrolmentPage = () => {
   const [name, setName] = useState("");
 
   /*      Test fetch with POST */
-  const post_title = useRef(null);
-  const post_description = useRef(null);
+  const first_name = useRef(null);
+  const second_name = useRef(null);
+  const email = useRef(null);
+  const phone = useRef(null);
+  const message = useRef(null);
 
   const [postResult, setPostResult] = useState(null);
 
@@ -36,8 +39,13 @@ const EnrolmentPage = () => {
 
   async function postData() {
     const postData = {
-      subject: post_title.current.value,
-      body: post_description.current.value,
+
+      subject: "Contact Form",
+      first_name: first_name.current.value,
+      second_name: second_name.current.value,
+      email: email.current.value,
+      phone: phone.current.value,
+      message: message.current.value,
     };
 
     console.log(postData);
@@ -52,12 +60,17 @@ const EnrolmentPage = () => {
         body: JSON.stringify(postData),
       });
 
+      console.log(JSON.stringify(postData));
+      console.log(res);
+      
       if (!res.ok) {
         const message = `An error has occured: ${res.status} - ${res.statusText}`;
         throw new Error(message);
       }
 
       const data = await res.json();
+
+      console.log(data);
 
       const result = {
         status: res.status + "-" + res.statusText,
@@ -67,9 +80,12 @@ const EnrolmentPage = () => {
         },
         data: data,
       };
-
+      console.log(result);
       setPostResult(fortmatResponse(result));
+
     } catch (err) {
+
+      console.log(err.message);
       setPostResult(err.message);
     }
   }
@@ -80,7 +96,7 @@ const EnrolmentPage = () => {
 
     
    // console.log( message );
-    setMessage(`${firstName}` + ' ' + `${secondName}`);
+    //setMessage(`${firstName}` + ' ' + `${secondName}`);
 
     console.log( message );
   };
@@ -91,7 +107,6 @@ const EnrolmentPage = () => {
       <SEO title="Enrolment"/>
 
       <Container>
-        <h1>Enrolment Form for Term and Private Lessons</h1>
         <Row>
             <Col lg={6}>
               <img style={{height:'auto',width:'20%'}} src={ gatsbyicon }/>
@@ -103,18 +118,21 @@ const EnrolmentPage = () => {
                 <span>Email: lehahhd@gmail.com</span>
               </div>
             </Col>
-          </Row>
+        </Row>
+
+        <h1>Enrolment Form for Term and Private Lessons</h1>
+
         <Col lg={6}>   
         <Form>
           <Row>
             <Col lg={6}>
               <Form.Group controlId="formBasicFirstName">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" 
-                value={firstName}               
-                ref={post_title}
-                onChange={e => setFirstName(e.target.value )}
-                placeholder="Include your real first name"/>
+                <Form.Control required type="text" 
+                      value={firstName}               
+                      ref={first_name}
+                      onChange={e => setFirstName(e.target.value )}
+                      placeholder="Include your real first name"/>
               </Form.Group>
             </Col>
 
@@ -122,43 +140,33 @@ const EnrolmentPage = () => {
               <Form.Group controlId="formBasicLastName">
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control type="text"               
-                value={secondName}                 
-                ref={post_description}            
-                onChange={e => setSecondName(e.target.value )}
-                placeholder="Include your real first name"/>
+                  value={secondName}                 
+                  ref={second_name}            
+                  onChange={e => setSecondName(e.target.value )}
+                  placeholder="Include your real first name"/>
               </Form.Group>              
             </Col>
           </Row>
 
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control  type="email"/>
+            <Form.Label>Email Address *</Form.Label>
+            <Form.Control required type="email" ref={email} />
           </Form.Group>        
           
           <Form.Group controlId="formBasicPhone">
             <Form.Label>Phone</Form.Label>
-            <Form.Control type="text"/>
+            <Form.Control type="text" ref={phone} />
           </Form.Group>        
           
           <Form.Group controlId="formBasicMessage">
             <Form.Label>Your Message</Form.Label>
-            <Form.Control as="textarea" row="3" placeholder="Please write your request"/>
+            <Form.Control as="textarea" ref={message} row="3" placeholder="Please write your request"/>
           </Form.Group>
-
-          <p>User Details: {firstName} {secondName}</p>
-          <p>User Details: {message}</p>
 
           <Button 
                 className="btnFormSend"
                 variant="outline-success"
                 onClick={postData}>
-              Post Data
-          </Button>
-
-          <Button 
-                className="btnFormSend"
-                variant="outline-success"
-                onClick={onSubmit1}>
               Submit
           </Button>
 

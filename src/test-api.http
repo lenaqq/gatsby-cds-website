@@ -6,6 +6,10 @@ POST https://ccjm8m9uo1.execute-api.us-east-1.amazonaws.com/prod
 content-type: application/json
 
 {
-    "subject": "New Enrolment (20211117)",
-    "body": "Online Digital Art Course"
+  "subject": "Contact Form",
+  "first_name": "Lena",
+  "second_name": "Test",
+  "email": "Lena@gmail.com",
+  "phone": "8837663646",
+  "message": "Online Digital Art Course"
 }
