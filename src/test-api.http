@@ -2,7 +2,8 @@ GET https://ccjm8m9uo1.execute-api.us-east-1.amazonaws.com/prod
 
 ###
 
-POST https://ccjm8m9uo1.execute-api.us-east-1.amazonaws.com/prod
+POST https://ccjm8m9uo1.execute-api.us-east-1.amazonaws.com
+
 content-type: application/json
 
 {
@@ -13,3 +14,23 @@ content-type: application/json
   "phone": "8837663646",
   "message": "Online Digital Art Course"
 }
+
+
+GET https://3bm5gh4tof.execute-api.us-east-1.amazonaws.com
+
+###
+# HTTP API
+POST https://6nnj3cc315.execute-api.us-east-1.amazonaws.com
+
+content-type: application/json
+
+{
+  "subject": "Contact Form",
+  "first_name": "Lena",
+  "second_name": "Test",
+  "email": "Lena@gmail.com",
+  "phone": "8837663646",
+  "message": "Online Digital Art Course"
+}
+
+###

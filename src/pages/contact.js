@@ -39,7 +39,6 @@ const EnrolmentPage = () => {
 
   async function postData() {
     const postData = {
-
       subject: "Contact Form",
       first_name: first_name.current.value,
       second_name: second_name.current.value,
@@ -49,20 +48,49 @@ const EnrolmentPage = () => {
     };
 
     console.log(postData);
-    
+    const url = "https://3bm5gh4tof.execute-api.us-east-1.amazonaws.com";
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    //headers.append('Authorization', 'Basic ' + base64.encode(username + ":" +  password));
+    headers.append('Origin','http://localhost:8000');
+
+    fetch(url, { method: "GET",
+                  mode: 'cors',
+                  headers: headers
+                }
+    )     
+    .then((response) => {
+      if (!response.ok) {
+          throw new Error(response.error)
+      }
+      return response.json();
+    })
+    .then(data => {
+        console.log(data.messages);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
     try {
-      const res = await fetch(`https://ccjm8m9uo1.execute-api.us-east-1.amazonaws.com/prod`, {
-        method: "post",
+      const option = {
+        method: "POST",
         mode: "no-cors",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(postData),
-      });
+        body: JSON.stringify(postData)
+      }
+
+      const res = await fetch(`https://6nnj3cc315.execute-api.us-east-1.amazonaws.com/postForm`, option);
 
       console.log(JSON.stringify(postData));
+      console.log(option);
       console.log(res);
-      
+      console.log('----------------');
+
       if (!res.ok) {
         const message = `An error has occured: ${res.status} - ${res.statusText}`;
         throw new Error(message);
@@ -83,11 +111,13 @@ const EnrolmentPage = () => {
       console.log(result);
       setPostResult(fortmatResponse(result));
 
-    } catch (err) {
-
+    } 
+    catch (err) 
+    {
       console.log(err.message);
       setPostResult(err.message);
     }
+    
   }
 
   const onSubmit1 = () => {
