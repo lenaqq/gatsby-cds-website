@@ -1,0 +1,7 @@
+IAM User name: ses-smtp-user.20211115-230335
+
+
+SMTP Username:
+AKIAQI5M7DZ2OOU2FFUW
+SMTP Password:
+BJuGjbdHmJvCJXNA7yagQ6Nrs6QS0y8heTQSjqptLGYT

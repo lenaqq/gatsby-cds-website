@@ -63,5 +63,9 @@ module.exports = {
     // `gatsby-plugin-offline`,
 
     "gatsby-plugin-mdx",
+    {
+      resolve: `gatsby-plugin-material-ui`,
+    },
+
   ],
 }

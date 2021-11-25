@@ -56,24 +56,6 @@ const EnrolmentPage = () => {
     //headers.append('Authorization', 'Basic ' + base64.encode(username + ":" +  password));
     headers.append('Origin','http://localhost:8000');
 
-    fetch(url, { method: "GET",
-                  mode: 'cors',
-                  headers: headers
-                }
-    )     
-    .then((response) => {
-      if (!response.ok) {
-          throw new Error(response.error)
-      }
-      return response.json();
-    })
-    .then(data => {
-        console.log(data.messages);
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-
     try {
       const option = {
         method: "POST",
@@ -86,11 +68,6 @@ const EnrolmentPage = () => {
 
       const res = await fetch(`https://6nnj3cc315.execute-api.us-east-1.amazonaws.com/postForm`, option);
 
-      console.log(JSON.stringify(postData));
-      console.log(option);
-      console.log(res);
-      console.log('----------------');
-
       if (!res.ok) {
         const message = `An error has occured: ${res.status} - ${res.statusText}`;
         throw new Error(message);
@@ -98,6 +75,7 @@ const EnrolmentPage = () => {
 
       const data = await res.json();
 
+      console.log('data:');
       console.log(data);
 
       const result = {
@@ -108,6 +86,8 @@ const EnrolmentPage = () => {
         },
         data: data,
       };
+
+      console.log('result: ');
       console.log(result);
       setPostResult(fortmatResponse(result));
 
@@ -204,7 +184,6 @@ const EnrolmentPage = () => {
         </Col>
         <Col lg="6">
 
-  
         </Col>
       </Container>
     </Layout>

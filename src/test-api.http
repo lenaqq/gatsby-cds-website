@@ -20,8 +20,7 @@ GET https://3bm5gh4tof.execute-api.us-east-1.amazonaws.com
 
 ###
 # HTTP API
-POST https://6nnj3cc315.execute-api.us-east-1.amazonaws.com
-
+POST https://6nnj3cc315.execute-api.us-east-1.amazonaws.com/postForm
 content-type: application/json
 
 {
