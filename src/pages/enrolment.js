@@ -7,7 +7,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 
-import  { Form, Button, Container, Row, Col, ListGroup, Badge, InputGroup, FormControl } from "react-bootstrap"
+import  { Form, Button, Container, Row, Col, ListGroup, Badge, InputGroup, FormControl, Checkbox } from "react-bootstrap"
 
 import { MDBInput } from 'mdbreact';
 
@@ -34,6 +34,8 @@ const EnrolmentPage = () => {
   const [postResult, setPostResult] = useState(null);
 
   const [voucher, setVoucher] = useState('');
+  const [digiArtChecked, setDigiArtChecked] = useState(false);
+  const [graphDesChecked, setGraphDesChecked] = useState(false);
 
   const fortmatResponse = (res) => {
     return JSON.stringify(res, null, 2);
@@ -105,9 +107,62 @@ const EnrolmentPage = () => {
     }));
   };
 
+  const [programs, setPrograms] = useState( { 'digi-art': false, 
+                                                    'gr-des': false, 
+                                                    'pack': false,
+                                                    'coding': false, 
+                                                    'python': false 
+                                                  } ) 
+
+  const handlePrograms = e =>
+  {
+    e.persist();
+
+    var course = e.target.id;
+
+    console.log(course);
+    programs[course] = !programs[course];
+    console.log(programs[course]);
+    console.log(programs);
+  } 
+
+  const courses = [ 
+                    { name: 'Introduction to Digital Art and Animation',
+                      abbr: 'digi-art',
+                      checked: false
+                    },
+                    { name: 'Introduction to Graphic Design',
+                      abbr: 'gr-des',
+                      checked: false
+                    },
+                    { name: 'Introduction Pack to Digital Art or Graphic Design',
+                      abbr: 'pack',
+                      checked: false
+                    },
+                    { name: 'Coding (Visual Block-Based Programming)',
+                      abbr: 'coding',
+                      checked: false
+                    },
+                    { name: 'Introduction to Python Programming',
+                      abbr: 'python',
+                      checked: false
+                    },
+                   ];
+
   const handleSubmit = e => {
+
     e.preventDefault();
-    alert(`${kindOfStand}` + ' ' + `${secondName}`);
+
+    let sel_courses = '';
+
+    for ( var course in programs ) { 
+      if ( programs[course] ) { 
+        
+        sel_courses += course + " "; 
+      } 
+    } 
+
+    alert(`${kindOfStand}`  + ' ' + `${secondName}` + ' ' + sel_courses);
 
   };
 
@@ -138,24 +193,22 @@ const EnrolmentPage = () => {
               as="li"
               className="d-flex justify-content-between align-items-start"
             >
+
               <div className="ms-2 me-auto">
                 <div className="fw-bold">Select one or more courses starting from July in 2021 (required)
                 </div>
+                
                 <div>
-                  {/* Material unchecked */}
-                  <MDBInput label="Introduction to Digital Art and Animation" type="checkbox" id="checkbox1" />
-      
-                  {/* Material checked */}
-                  <MDBInput label="Introduction to Graphic Design" type="checkbox" id="checkbox2" />
-          
-                  {/* Material checked */}
-                  <MDBInput label="Introduction Pack to Digital Art or Graphic Design" type="checkbox" id="checkbox3" />
-
-                  {/* Material unchecked disabled */}
-                  <MDBInput label="Coding (Visual Block-Based Programming)" type="checkbox" id="checkbox4" />
-      
-                  {/* Material checked disabled */}
-                  <MDBInput label="Introduction to Python Programming" type="checkbox" id="checkbox5" />
+                  {courses.map((course) => 
+                      <Form.Check
+                        type="checkbox"
+                        id={course.abbr}
+                        label={course.name}
+                        onChange={handlePrograms}
+                        course={course.abbr}
+                      />  
+                    )             
+                  }
 
                 </div>
                 <br/>
