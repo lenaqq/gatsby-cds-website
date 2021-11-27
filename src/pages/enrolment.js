@@ -106,7 +106,31 @@ const EnrolmentPage = () => {
     }));
   };
 
+  const [schoolYear, setSchoolYear] = useState(""); 
+  const [studentEmail, setStudentEmail] = useState("");
+
   const [hasVoucher, setHasVoucher] = useState("no");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [otherOS, setOtherOS] = useState("");
+
+  const [deviceOS, setDeviceOS] = useState("");
+  const [borrowMonitor, setBorrowMonitor] = useState("");
+
+  const [parentName, setParentName] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
+  const [parentEmail, setParentEmail] = useState("");
+  const [comment, setComment] = useState("");
+
+  const [accept, setAccept] = useState(false);
+
+  const handleAccept = e =>
+  {
+    e.persist();
+    var option = e.target.id;
+    console.log(e.target.checked);
+
+    setAccept( e.target.checked );
+  }    
 
   const handleVoucher = e =>
   {
@@ -116,29 +140,44 @@ const EnrolmentPage = () => {
     setHasVoucher(sel);
   }
 
+  const handleDeviceOS= e =>
+  {
+    e.persist();
+    var sel = e.target.value;
+    console.log(e.target);
+    setDeviceOS(sel);
+  }
+
+  const handleBorrowMonitor = e =>
+  {
+    e.persist();
+    var sel = e.target.value;
+    console.log(e.target);
+    setBorrowMonitor(sel);
+  }
   /* 1. Select one or more courses ... */
   const courses = [ 
-    { name: 'Introduction to Digital Art and Animation',
-      abbr: 'digi-art',
-      checked: false
-    },
-    { name: 'Introduction to Graphic Design',
-      abbr: 'gr-des',
-      checked: false
-    },
-    { name: 'Introduction Pack to Digital Art or Graphic Design',
-      abbr: 'pack',
-      checked: false
-    },
-    { name: 'Coding (Visual Block-Based Programming)',
-      abbr: 'coding',
-      checked: false
-    },
-    { name: 'Introduction to Python Programming',
-      abbr: 'python',
-      checked: false
-    },
-   ];
+                    { name: 'Introduction to Digital Art and Animation',
+                      abbr: 'digi-art',
+                      checked: false
+                    },
+                    { name: 'Introduction to Graphic Design',
+                      abbr: 'gr-des',
+                      checked: false
+                    },
+                    { name: 'Introduction Pack to Digital Art or Graphic Design',
+                      abbr: 'pack',
+                      checked: false
+                    },
+                    { name: 'Coding (Visual Block-Based Programming)',
+                      abbr: 'coding',
+                      checked: false
+                    },
+                    { name: 'Introduction to Python Programming',
+                      abbr: 'python',
+                      checked: false
+                    },
+                  ];
 
   const [programs, setPrograms] = useState( { 'digi-art': false, 
                                                     'gr-des': false, 
@@ -293,6 +332,10 @@ const EnrolmentPage = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
+    /* Get selections from text input */
+    let student_name = 'Student Name: ' + `${firstName}`  + ' ' + `${secondName}` + '\n';
+
+    /* Get selections from checkbox input */
     let sel_courses = 'courses: ';
     for ( var course in programs ) { 
       if ( programs[course] ) 
@@ -317,10 +360,15 @@ const EnrolmentPage = () => {
         sel_lang += option + "\n"; 
     } 
 
-    alert('Student Name: ' + `${firstName}`  + ' ' + `${secondName}` + '\n' + 
-            'has voucher? ' + hasVoucher + '\n' + 
-            sel_courses + sel_prices +
-            sel_device + sel_lang);
+    let enrolData = sel_courses + sel_prices + student_name + ' ' + schoolYear + ' ' + email + ' ' +    // 1 - 5
+                  'has voucher? ' + hasVoucher + ' ' + voucher + ' ' + dateOfBirth + '\n' +  // 6
+                  'deviceOS: ' + deviceOS + ' ' + otherOS + '\n' + // 7
+                  sel_device + 'borrowMonitor: ' + borrowMonitor + '\n' + // 8, 9
+                  sel_lang + // 10
+                  'parentDetail: ' + parentName + ' ' + parentPhone + ' ' + parentEmail + '\n' + // 11 - 13
+                  'comment: ' + comment + '\n' + 'accept: ' + accept;
+
+    alert(enrolData);
 
   };
 
@@ -417,11 +465,9 @@ const EnrolmentPage = () => {
                 <Col lg={6}>
                   <Form.Group controlId="formBasicFirstName">
                     <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" 
-                    value={firstName}               
-                    ref={post_title}
-                    onChange={e => setFirstName(e.target.value )}
-                    placeholder="Include your real first name"/>
+                    <Form.Control type="text" value={firstName} ref={post_title}
+                      onChange={e => setFirstName(e.target.value )}
+                      placeholder="Include your real first name"/>
                   </Form.Group>
                 </Col>
     
@@ -447,7 +493,8 @@ const EnrolmentPage = () => {
                 <div className="fw-bold">School Year:
                 </div>
                 <Form.Group controlId="formBasicEmail">
-                    <Form.Control  type="email"/>
+                    <Form.Control value={schoolYear}  type="text" 
+                    onChange={e => setSchoolYear(e.target.value )}/>
                 </Form.Group>     
               </div>      
             </ListGroup.Item>  
@@ -459,8 +506,9 @@ const EnrolmentPage = () => {
               <div className="ms-2 me-auto">
                 <div className="fw-bold">Student Email Address:
                 </div>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Control  type="email"/>
+                <Form.Group controlId="enrolField5">
+                    <Form.Control value={studentEmail} type="email"
+                    onChange={e => setStudentEmail(e.target.value )}/>
                 </Form.Group>     
               </div>
             </ListGroup.Item>
@@ -469,49 +517,33 @@ const EnrolmentPage = () => {
               as="li"
               className="d-flex justify-content-between align-items-start"
             >
-
               <div className="ms-2 me-auto">
-                <div className="fw-bold">Select one or more programs with prices (required)</div>
-              <div>
-
-              <Form.Group controlId="kindOfStand">
-                <Form.Check
-                  value="No"
-                  type="radio"
-                  aria-label="radio 1"
-                  label="No Voucher"
-                  onChange={handleVoucher}
-                  checked={hasVoucher === "No"}
-                />
-                <Form.Check
-                  value="Yes"
-                  type="radio"
-                  aria-label="radio 2"
-                  label="Yes (Your payment will be reduced by $100). Please fill in the following fields:"
-                  onChange={handleVoucher}
-                  checked={hasVoucher === "Yes"}
-                />
-              </Form.Group>
-
-                  {/* Material unchecked */}
-                  <MDBInput label="No" name="option" type="radio" id="no_voucher" 
-                    value={voucher}
-                  />
-      
-                  {/* Material checked */}
-                  <MDBInput label="Yes (Your payment will be reduced by $100). Please fill in the following fields:" 
-                    type="radio" name="option" id="voucher" 
-                    value={voucher}
-                  />
+                <div className="fw-bold">Will you use Creative Kids Voucher ($100)?
                 </div>
-                <div className="fw-bold">Voucher Number:</div>
+              <div>
+                <Form.Group controlId="EnrolField6">
+                  <Form.Check
+                    value="No" type="radio" aria-label="radio 1" label="No Voucher"
+                    onChange={handleVoucher} checked={hasVoucher === "No"}
+                  />
+                  <Form.Check
+                    value="Yes" type="radio" aria-label="radio 2"
+                    label="Yes (Your payment will be reduced by $100). Please fill in the following fields:"
+                    onChange={handleVoucher} checked={hasVoucher === "Yes"}
+                  />
+                </Form.Group>
+              </div>
+              <div className="fw-bold">Voucher Number:</div>
                 <Form.Group controlId="formBasicMessage">
-                  <Form.Control as="text" row="3" placeholder="16 digits"/>
+                  <Form.Control type="text" value={voucher} placeholder="16 digits"
+                  onChange={e => setVoucher(e.target.value )}/>
                 </Form.Group>
                 <div className="fw-bold">Date of Birth:</div>
                 <Form.Group controlId="formDatOfBirth">
-                  <Form.Control as="text" row="3" placeholder="16 digits"/>
+                  <Form.Control type="text" value={dateOfBirth}
+                  onChange={e => setDateOfBirth(e.target.value )}/>
                 </Form.Group>
+
                 <div>Alternatively, please send the voucher to info@creativedigitalspace.com.au with your child’s date of birth.</div>
               </div>
               <br/>
@@ -522,25 +554,32 @@ const EnrolmentPage = () => {
               className="d-flex justify-content-between align-items-start"
             >
               <div className="ms-2 me-auto">
-                <div className="fw-bold">Student Email Address:</div>
-                <div>
-                  {/* Material unchecked */}
-                  <MDBInput label="Desktop (Windows 10)" type="radio" id="no_voucher" />
-                  {/* Material checked */}
-                  <MDBInput label="Laptop (Windows 10)" type="radio" id="voucher" />
-                  {/* Material unchecked */}
-                  <MDBInput label="Computer tablet (Windows 10)" type="radio" id="no_voucher" />
-                  {/* Material checked */}
-                  <MDBInput label="iMac" type="radio" id="voucher" />
-                  {/* Material unchecked */}
-                  <MDBInput label="iPad 8 or Air with a digital pencil" type="radio" id="no_voucher" />
-                  {/* Material checked */}
-                  <MDBInput label="Mobile device (Android)" type="radio" id="voucher" />
-                </div>
+                <div className="fw-bold">Select one of the following computer device you are going to use in this course: (required)</div>
+                <Form.Group controlId="EnrolField7">
+                  <Form.Check
+                    value="pcWin10" type="radio" aria-label="radio 1" label="Desktop (Windows 10)"
+                    onChange={handleDeviceOS} checked={deviceOS === "pcWin10"} />
+                  <Form.Check
+                    value="lapWin10" type="radio" aria-label="radio 2" label="Laptop (Windows 10)"
+                    onChange={handleDeviceOS} checked={deviceOS === "lapWin10"} />
+                  <Form.Check
+                    value="Tablet" type="radio" aria-label="radio 2" label="Computer tablet (Windows 10)"
+                    onChange={handleDeviceOS} checked={deviceOS === "Tablet"} />
+                  <Form.Check
+                    value="mac" type="radio" aria-label="radio 2" label="iMac"
+                    onChange={handleDeviceOS} checked={deviceOS === "mac"} />
+                  <Form.Check
+                    value="ipad" type="radio" aria-label="radio 2" label="iPad 8 or Air with a digital pencil"
+                    onChange={handleDeviceOS} checked={deviceOS === "ipad"} />
+                  <Form.Check
+                    value="android" type="radio" aria-label="radio 2" label="Mobile device (Android)"
+                    onChange={handleDeviceOS} checked={deviceOS === "android"} />
+                </Form.Group>                
 
                 <Form.Group controlId="formBasicMessage">
                 <Form.Label>If none of the above is selected, please indicate the computer model that you are going to use in this course:</Form.Label>
-                <Form.Control as="text" row="3" placeholder="Please write your request"/>
+                <Form.Control type="text" value={otherOS} placeholder="Please write your request"
+                  onChange={e => setOtherOS(e.target.value )}/>
               </Form.Group>
               </div>
             </ListGroup.Item>
@@ -587,12 +626,14 @@ const EnrolmentPage = () => {
               <div className="ms-2 me-auto">
                 <div className="fw-bold">We prefer using a big screen/monitor during the class time. Would you like to borrow a big monitor from us?
                 </div>
-                <div>
-                  {/* Material unchecked */}
-                  <MDBInput label="Yes ($50 deposit)" type="radio" id="no_voucher" />
-                  {/* Material checked */}
-                  <MDBInput label="No" type="radio" id="voucher" />
-                </div>
+                <Form.Group controlId="EnrolField7">
+                  <Form.Check
+                    value="borrow-monitor" type="radio" aria-label="radio 1" label="Yes ($50 deposit)"
+                    onChange={handleBorrowMonitor} checked={borrowMonitor === "borrow-monitor"} />
+                  <Form.Check
+                    value="no-monitor" type="radio" aria-label="radio 2" label="No"
+                    onChange={handleBorrowMonitor} checked={borrowMonitor === "no-monitor"} />
+                </Form.Group>                  
               </div>
             </ListGroup.Item>
 
@@ -621,8 +662,18 @@ const EnrolmentPage = () => {
               <div className="ms-2 me-auto">
                 <div className="fw-bold">Parent full name (required):
                 </div>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Control  type="email"/>
+                <Form.Group controlId="enrolField11">
+                    <Form.Control value={parentName} type="text" onChange={e => setParentName(e.target.value )}/>
+                </Form.Group>     
+              </div>
+            </ListGroup.Item>
+                                  
+            <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start">
+              <div className="ms-2 me-auto">
+                <div className="fw-bold">Contact phone (required):
+                </div>
+                <Form.Group controlId="enrolField12">
+                    <Form.Control value={parentPhone} type="text" onChange={e => setParentPhone(e.target.value )}/>
                 </Form.Group>     
               </div>
             </ListGroup.Item>
@@ -632,8 +683,8 @@ const EnrolmentPage = () => {
                 <div className="fw-bold">Contact email (required)
                 (required):
                 </div>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Control  type="email"/>
+                <Form.Group controlId="enrolField12">
+                    <Form.Control value={parentEmail} type="email" onChange={e => setParentEmail(e.target.value )}/>
                 </Form.Group>     
               </div>
             </ListGroup.Item>
@@ -642,8 +693,9 @@ const EnrolmentPage = () => {
               <div className="ms-2 me-auto">
                 <div className="fw-bold">Comment (max 100 letters):
                 </div>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Control  as="textarea" row="3" />
+                <Form.Group controlId="enrolField13">
+                  <Form.Control  value={comment}  as="textarea" row="3" 
+                    onChange={e => setComment(e.target.value )}/>
                 </Form.Group>     
               </div>
 
@@ -670,10 +722,10 @@ const EnrolmentPage = () => {
                 <p>
                 You, parent/carer, give consent for your child to participate in the selected workshop/classes. You realise precautions are taken to eliminate any injuries or hazards and a competent supervisor is present online; however, in the event of any injury, You hereby waive, release and hold harmless from any liability for damages or claims for personal injury, including accidental death, as well as for property damage which may arise in conjunction with the above activity, against Creative Digital Space, its employees and assistants.
                 </p>
-                <div>
-                  {/* Material unchecked */}
-                  <MDBInput label="Accept" type="checkbox" id="checkbox1" />      
-                </div>
+                <Form.Group controlId="EnrolField15">
+                  <Form.Check type="checkbox" id="accept" label="Accept" 
+                  onChange={handleAccept} />
+                </Form.Group>
               </div>
 
             </ListGroup.Item>
