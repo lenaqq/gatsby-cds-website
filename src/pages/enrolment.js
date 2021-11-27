@@ -94,7 +94,6 @@ const EnrolmentPage = () => {
   };
 
   const [item, setItem] = useState({ kindOfStand: "", another: "another" });
-
   const { kindOfStand } = item;
 
   const handleChangeTest = e => {
@@ -107,62 +106,221 @@ const EnrolmentPage = () => {
     }));
   };
 
+  const [hasVoucher, setHasVoucher] = useState("no");
+
+  const handleVoucher = e =>
+  {
+    e.persist();
+    var sel = e.target.value;
+    console.log(e.target);
+    setHasVoucher(sel);
+  }
+
+  /* 1. Select one or more courses ... */
+  const courses = [ 
+    { name: 'Introduction to Digital Art and Animation',
+      abbr: 'digi-art',
+      checked: false
+    },
+    { name: 'Introduction to Graphic Design',
+      abbr: 'gr-des',
+      checked: false
+    },
+    { name: 'Introduction Pack to Digital Art or Graphic Design',
+      abbr: 'pack',
+      checked: false
+    },
+    { name: 'Coding (Visual Block-Based Programming)',
+      abbr: 'coding',
+      checked: false
+    },
+    { name: 'Introduction to Python Programming',
+      abbr: 'python',
+      checked: false
+    },
+   ];
+
   const [programs, setPrograms] = useState( { 'digi-art': false, 
                                                     'gr-des': false, 
                                                     'pack': false,
                                                     'coding': false, 
                                                     'python': false 
-                                                  } ) 
+                                                  } );
 
   const handlePrograms = e =>
   {
     e.persist();
-
     var course = e.target.id;
-
     console.log(course);
     programs[course] = !programs[course];
     console.log(programs[course]);
     console.log(programs);
-  } 
+  }
 
-  const courses = [ 
-                    { name: 'Introduction to Digital Art and Animation',
-                      abbr: 'digi-art',
+  /* 2. Select one or more programs with prices */
+  const prices = [ 
+                    { name: 'One term $240 (8 classes and each is 1 hours. Starts on 2nd week of the term, 2-4 kids)',
+                      abbr: '240',
                       checked: false
                     },
-                    { name: 'Introduction to Graphic Design',
-                      abbr: 'gr-des',
+                    { name: 'Introduction Pack to Graphic Design, $130',
+                      abbr: '130',
                       checked: false
                     },
-                    { name: 'Introduction Pack to Digital Art or Graphic Design',
-                      abbr: 'pack',
+                    { name: '1 Hour Private lesson, $50',
+                      abbr: '50',
                       checked: false
                     },
-                    { name: 'Coding (Visual Block-Based Programming)',
-                      abbr: 'coding',
+                    { name: '4 Hour Private lessons, $180',
+                      abbr: '180',
                       checked: false
                     },
-                    { name: 'Introduction to Python Programming',
-                      abbr: 'python',
+                    { name: '6 Hour Private lessons, $240',
+                      abbr: '230',
+                      checked: false
+                    },
+                    { name: '8 hour private lessons, $320',
+                      abbr: '320',
                       checked: false
                     },
                    ];
 
-  const handleSubmit = e => {
+  const [priceStates, setPriceStates] = useState( 
+      { '240': false, 
+        '130': false, 
+        '50': false,
+        '180': false, 
+        '230': false, 
+        '320': false 
+      } ) 
 
+  const handlePrices = e =>
+  {
+    e.persist();
+    var method = e.target.id;
+    console.log(method);
+
+    priceStates[method] = !priceStates[method];
+    console.log(priceStates[method]);
+    console.log(priceStates);
+  } 
+
+  /* 8. select device */
+  const devices = [ 
+    { name: 'I have a drawing tablet and a web cam',
+      abbr: 'have',
+      checked: false
+    },
+    { name: "I'd like to borrow a drawing tablet ($65 deposit)",
+      abbr: 'borrow-tablet',
+      checked: false
+    },
+    { name: "I'd like to borrow a web cam (external) ($35 deposit)",
+      abbr: 'borrow-webcam',
+      checked: false
+    },
+    { name: "I'd like to purchase a drawing tablet ($65)",
+      abbr: 'buy-tablet',
+      checked: false
+    },
+    { name: "I'd like to purchase a web cam (external) ($35)",
+      abbr: 'buy-webcam',
+      checked: false
+    },
+    { name: 'Not need it',
+      abbr: 'no-need',
+      checked: false
+    },
+   ];
+
+   const [deviceStates, setDeviceStates] = useState( 
+    { 'have': false, 
+      'borrow-tablet': false, 
+      'borrow-webcam': false,
+      'buy-tablet': false, 
+      'buy-webcam': false, 
+      'no-need': false 
+    } ) ;
+
+  const handleDevices = e =>
+  {
+    e.persist();
+    var option = e.target.id;
+    console.log(option);
+
+    deviceStates[option] = !deviceStates[option];
+    console.log(deviceStates);
+  }       
+
+  /* 10: Select languange */
+  const languages = [ 
+    { name: 'English',
+      abbr: 'english',
+      checked: false
+    },
+    { name: "Chinese (Mandarin)",
+      abbr: 'mandarin',
+      checked: false
+    },
+    { name: "Chinese (Cantonese)",
+      abbr: 'Cantonese',
+      checked: false
+    },
+    { name: "Spanish",
+      abbr: 'spanish',
+      checked: false
+    }
+   ];
+
+   const [languageStates, setLanguageStates] = useState( 
+    { 'english': false, 
+      'mandarin': false, 
+      'Cantonese': false,
+      'spanish': false 
+    } ) ;
+
+  const handleLanguages = e =>
+  {
+    e.persist();
+    var option = e.target.id;
+    console.log(option);
+
+    languageStates[option] = !languageStates[option];
+
+    console.log(languageStates);
+  }    
+
+  const handleSubmit = e => {
     e.preventDefault();
 
-    let sel_courses = '';
-
+    let sel_courses = 'courses: ';
     for ( var course in programs ) { 
-      if ( programs[course] ) { 
-        
-        sel_courses += course + " "; 
-      } 
+      if ( programs[course] ) 
+        sel_courses += course + "\n"; 
     } 
 
-    alert(`${kindOfStand}`  + ' ' + `${secondName}` + ' ' + sel_courses);
+    let sel_prices = 'prices: ';
+    for ( var option in priceStates ) { 
+      if ( priceStates[option] ) 
+      sel_prices += option + "\n"; 
+    } 
+
+    let sel_device = 'device: ';
+    for ( var option in deviceStates ) { 
+      if ( deviceStates[option] ) 
+      sel_device += option + "\n"; 
+    } 
+
+    let sel_lang = 'language: ';
+    for ( var option in languageStates ) { 
+      if ( languageStates[option] ) 
+        sel_lang += option + "\n"; 
+    } 
+
+    alert('Student Name: ' + `${firstName}`  + ' ' + `${secondName}` + '\n' + 
+            'has voucher? ' + hasVoucher + '\n' + 
+            sel_courses + sel_prices +
+            sel_device + sel_lang);
 
   };
 
@@ -209,7 +367,6 @@ const EnrolmentPage = () => {
                       />  
                     )             
                   }
-
                 </div>
                 <br/>
                 <p>Note: Enrolment deadline is two weeks before the course starts if you need to order a drawing tablet. 
@@ -236,25 +393,17 @@ const EnrolmentPage = () => {
                 <div className="fw-bold">Select one or more programs with prices (required)</div>
                 <br/>
                 <div>
-                  {/* Material unchecked */}
-                  <MDBInput label="One term $240 (8 classes and each is 1 hours. Starts on 2nd week of the term, 2-4 kids)" type="checkbox" id="checkbox1" />
-      
-                  {/* Material checked */}
-                  <MDBInput label="1 Hour Private lesson, $50" type="checkbox" id="checkbox2" value={secondName}/>
-          
-                  <MDBInput label="4 Hour Private lessons, $180" type="checkbox" id="checkbox3" />
-
-                  {/* Material unchecked disabled */}
-                  <MDBInput label="6 Hour Private lessons, $240" type="checkbox" id="checkbox4" />
-      
-                  {/* Material checked disabled */}
-                  <MDBInput label="8 hour private lessons, $320" type="checkbox" id="checkbox5" />
-
-                  {/* Material unchecked disabled */}
-                  <MDBInput label="Introduction Pack to Digital Art or Graphic Design, $130" type="checkbox" id="checkbox4" />
-
+                  {prices.map((method) => 
+                      <Form.Check
+                        type="checkbox"
+                        id={method.abbr}
+                        label={method.name}
+                        onChange={handlePrices}
+                      />  
+                    )             
+                  }
                 </div>
-                </div>
+            </div>
             </ListGroup.Item>
 
             <ListGroup.Item
@@ -323,28 +472,26 @@ const EnrolmentPage = () => {
 
               <div className="ms-2 me-auto">
                 <div className="fw-bold">Select one or more programs with prices (required)</div>
-
-              
               <div>
 
               <Form.Group controlId="kindOfStand">
-              <Form.Check
-                value="No"
-                type="radio"
-                aria-label="radio 1"
-                label="No Voucher"
-                onChange={handleChangeTest}
-                checked={kindOfStand === "No"}
-              />
-              <Form.Check
-                value="Yes"
-                type="radio"
-                aria-label="radio 2"
-                label="Have a Creative Kids Voucher"
-                onChange={handleChangeTest}
-                checked={kindOfStand === "Yes"}
-              />
-            </Form.Group>
+                <Form.Check
+                  value="No"
+                  type="radio"
+                  aria-label="radio 1"
+                  label="No Voucher"
+                  onChange={handleVoucher}
+                  checked={hasVoucher === "No"}
+                />
+                <Form.Check
+                  value="Yes"
+                  type="radio"
+                  aria-label="radio 2"
+                  label="Yes (Your payment will be reduced by $100). Please fill in the following fields:"
+                  onChange={handleVoucher}
+                  checked={hasVoucher === "Yes"}
+                />
+              </Form.Group>
 
                   {/* Material unchecked */}
                   <MDBInput label="No" name="option" type="radio" id="no_voucher" 
@@ -409,22 +556,20 @@ const EnrolmentPage = () => {
                   digital art courses. You can purchase them or borrow them from us. Please select one or more 
                   options below:                
                 </div>
+
                 <div>
-                  {/* Material unchecked */}
-                  <MDBInput label="I have a drawing tablet and a web cam" type="checkbox" id="checkbox1" />      
-                  {/* Material checked */}
-                  <MDBInput label="I'd like to borrow a drawing tablet ($65 deposit)" type="checkbox" id="checkbox2" />    
-                  <MDBInput label="I'd like to borrow a web cam (external) ($35 deposit)" type="checkbox" id="checkbox3" />
-                  {/* Material unchecked disabled */}
-                  <MDBInput label="I'd like to purchase a drawing tablet ($65)" type="checkbox" id="checkbox4" />
-     
-                  {/* Material checked disabled */}
-                  <MDBInput label="I'd like to purchase a web cam (external) ($35)" type="checkbox" id="checkbox5" />
-
-                  {/* Material unchecked disabled */}
-                  <MDBInput label="Not need it" type="checkbox" id="checkbox4" />
-
-                </div><br/>
+                  {devices.map((option) => 
+                      <Form.Check
+                        type="checkbox"
+                        id={option.abbr}
+                        label={option.name}
+                        onChange={handleDevices}
+                      />  
+                    )             
+                  }
+                </div>
+                
+                <br/>
 
                 <div>If you borrow any device, we can arrange a pick up time for the device. When you 
                   return them in good condition, we will return your deposit.</div><br/>
@@ -459,14 +604,15 @@ const EnrolmentPage = () => {
                 <div className="fw-bold">We prefer using a big screen/monitor during the class time. Would you like to borrow a big monitor from us?
                 </div>
                 <div>
-                  {/* Material unchecked */}
-                  <MDBInput label="English" type="checkbox" id="checkbox1" />      
-                  {/* Material checked */}
-                  <MDBInput label="Chinese (Mandarin)" type="checkbox" id="checkbox2" />          
-                  {/* Material checked */}
-                  <MDBInput label="Chinese (Cantonese)" type="checkbox" id="checkbox3" />
-                  {/* Material unchecked disabled */}
-                  <MDBInput label="Spanish" type="checkbox" id="checkbox4" />
+                  {languages.map((option) => 
+                      <Form.Check
+                        type="checkbox"
+                        id={option.abbr}
+                        label={option.name}
+                        onChange={handleLanguages}
+                      />  
+                    )             
+                  }
                 </div>
               </div>
             </ListGroup.Item>
